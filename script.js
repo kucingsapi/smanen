@@ -1,3 +1,4 @@
+// Fungsi untuk mendapatkan lokasi pengguna
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition, handleLocationError);
@@ -6,6 +7,7 @@ function getLocation() {
     }
 }
 
+// Fungsi untuk menampilkan peta dan menghitung jarak
 function showPosition(position) {
     var userLat = position.coords.latitude;
     var userLng = position.coords.longitude;
@@ -51,6 +53,7 @@ function showPosition(position) {
     document.getElementById("distance").innerHTML = "Jarak ke SMAN 1 Tabunganen: " + distance.toFixed(2) + " km";
 }
 
+// Fungsi untuk menangani error lokasi
 function handleLocationError(error) {
     switch(error.code) {
         case error.PERMISSION_DENIED:
@@ -68,10 +71,11 @@ function handleLocationError(error) {
     }
 }
 
+// Fungsi untuk menghitung jarak antara dua titik menggunakan koordinat geografis
 function calculateDistance(lat1, lng1, lat2, lng2) {
     var R = 6371; // Radius bumi dalam kilometer
     var dLat = deg2rad(lat2 - lat1);
-    var dLng = deg2rad(lat2 - lng1);
+    var dLng = deg2rad(lng2 - lng1);
     var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
             Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
             Math.sin(dLng/2) * Math.sin(dLng/2);
@@ -80,6 +84,12 @@ function calculateDistance(lat1, lng1, lat2, lng2) {
     return distance;
 }
 
+// Konversi derajat ke radian
 function deg2rad(deg) {
     return deg * (Math.PI / 180);
 }
+
+// Memuat peta setelah halaman selesai dimuat
+window.onload = function() {
+    initMap();
+};
